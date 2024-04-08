@@ -2,13 +2,68 @@
 <html>
 <head>
     <title>File List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-right: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Uploaded Files</h1>
-    <ul>
-        {% for file in files %}
-            <li><a href="{% url 'download' file.id %}">{{ file.file.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Uploaded Files</h1>
+        <ul>
+            {% for file in files %}
+                <li>
+                    <a href="{% url 'download' file.id %}">{{ file.file.name }}</a>
+                    <form method="post" action="{% url 'delete' file.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'home' %}" class="btn">Back to Home</a>
+    </div>
 </body>
 </html>

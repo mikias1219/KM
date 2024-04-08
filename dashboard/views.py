@@ -393,3 +393,7 @@ def download_file(request, file_id):
         response = HttpResponse(file.read(), content_type='application/force-download')
         response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
         return response
+def delete_file(request, file_id):
+    file = UploadedFile.objects.get(id=file_id)
+    file.delete()
+    return redirect('showfile')
