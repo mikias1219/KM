@@ -78,7 +78,8 @@
                   <a class="dropdown-item" href="{% url 'notes' %}">Notes</a>
                   <a class="dropdown-item" href="{% url 'sendemail' %}">Send Email</a>
                   <a class="dropdown-item" href="{% url 'upload' %}">Upload File </a>
-                  <a class="dropdown-item" href="{% url 'download' %}">Download file</a>
+                  <a href="{% url 'download' file_id=1 %}">Download File</a>
+
                   <a class="dropdown-item" href="{% url 'showfile' %}">Show file</a>
                   <div class="dropdown-divider"></div>
                 </div>
