@@ -397,3 +397,18 @@ def delete_file(request, file_id):
     file = UploadedFile.objects.get(id=file_id)
     file.delete()
     return redirect('showfile')
+# faq_chatbot/views.py
+
+from django.shortcuts import render
+from .models import FAQ
+
+def chatbot(request):
+    response = None
+    if request.method == 'POST':
+        user_input = request.POST.get('user_input')
+        faq = FAQ.objects.filter(question__icontains=user_input).first()
+        if faq:
+            response = faq.answer
+        else:
+            response = "Sorry, I couldn't find an answer to your question."
+    return render(request, 'dashboard/chatbot.html', {'response': response})

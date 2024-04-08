@@ -1,0 +1,19 @@
+<!-- faq_chatbot/templates/faq_chatbot/chatbot.html -->
+
+<html>
+<head>
+    <title>FAQ Chatbot</title>
+</head>
+<body>
+    <h1>FAQ Chatbot</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="user_input">Ask a question:</label><br>
+        <input type="text" id="user_input" name="user_input"><br>
+        <input type="submit" value="Submit">
+    </form>
+    {% if response %}
+        <p>{{ response }}</p>
+    {% endif %}
+</body>
+</html>
