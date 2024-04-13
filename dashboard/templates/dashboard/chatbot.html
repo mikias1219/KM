@@ -1,19 +1,74 @@
-<!-- faq_chatbot/templates/faq_chatbot/chatbot.html -->
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>FAQ Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>FAQ Chatbot</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="user_input">Ask a question:</label><br>
-        <input type="text" id="user_input" name="user_input"><br>
-        <input type="submit" value="Submit">
-    </form>
-    {% if response %}
-        <p>{{ response }}</p>
-    {% endif %}
+    <div class="container">
+        <h1>FAQ Chatbot</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="user_input">Ask a question:</label><br>
+            <input type="text" id="user_input" name="user_input"><br>
+            <input type="submit" value="Submit">
+        </form>
+        {% if response %}
+            <div class="response">
+                <p>{{ response }}</p>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>

@@ -12,7 +12,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: #fff;
             padding: 20px;
@@ -44,12 +44,20 @@
 </head>
 <body>
 <div class="container">
-    <h1>Send Email</h1>
-    <form method="post">
+    <h1>Compose Email</h1>
+    <form method="post" action="{% url 'sendemail' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-group">
             <label for="id_to">To:</label>
-            <input type="email" id="id_to" name="to" class="form-control" required>
+            <input type="email" id="id_to" name="recipient" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="id_cc">CC:</label>
+            <input type="email" id="id_cc" name="cc" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="id_bcc">BCC:</label>
+            <input type="email" id="id_bcc" name="bcc" class="form-control">
         </div>
         <div class="form-group">
             <label for="id_subject">Subject:</label>
@@ -58,6 +66,10 @@
         <div class="form-group">
             <label for="id_message">Message:</label>
             <textarea id="id_message" name="message" class="form-control" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="id_attachments">Attachments:</label>
+            <input type="file" id="id_attachments" name="attachments" class="form-control-file" multiple>
         </div>
         <button type="submit" class="btn btn-primary">Send Email</button>
     </form>

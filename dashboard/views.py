@@ -344,30 +344,43 @@ def profile(request):
     }
 
     return render(request, "dashboard/profile.html", context)
-# views.py
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.shortcuts import render
 from .forms import EmailForm
 
 def send_email(request):
     if request.method == 'POST':
-        form = EmailForm(request.POST)
+        form = EmailForm(request.POST, request.FILES)
         if form.is_valid():
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             recipient = form.cleaned_data['recipient']
-            send_mail(
-                subject,
-                message,
-                settings.EMAIL_HOST_USER,
-                [recipient],
-                fail_silently=False,
+            cc = form.cleaned_data.get('cc', '')  # Get CC recipients, default to empty string
+            bcc = form.cleaned_data.get('bcc', '')  # Get BCC recipients, default to empty string
+
+            # Prepare the email message
+            email = EmailMessage(
+                subject=subject,
+                body=message,
+                from_email=settings.EMAIL_HOST_USER,
+                to=[recipient],
+                cc=[cc] if cc else None,  # Convert cc to list if not empty, otherwise None
+                bcc=[bcc] if bcc else None,  # Convert bcc to list if not empty, otherwise None
             )
+
+            # Attach files to the email, if any
+            for file in request.FILES.getlist('attachments'):
+                email.attach(file.name, file.read(), file.content_type)
+
+            # Send the email
+            email.send()
+
             return render(request, 'dashboard/email_sent.html')
     else:
         form = EmailForm()
     return render(request, 'dashboard/send_email.html', {'form': form})
+
 from django.shortcuts import render, redirect
 from .models import UploadedFile
 from .forms import FileUploadForm
