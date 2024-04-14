@@ -356,8 +356,6 @@ def send_email(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             recipient = form.cleaned_data['recipient']
-            cc = form.cleaned_data.get('cc', '')  # Get CC recipients, default to empty string
-            bcc = form.cleaned_data.get('bcc', '')  # Get BCC recipients, default to empty string
 
             # Prepare the email message
             email = EmailMessage(
@@ -365,8 +363,6 @@ def send_email(request):
                 body=message,
                 from_email=settings.EMAIL_HOST_USER,
                 to=[recipient],
-                cc=[cc] if cc else None,  # Convert cc to list if not empty, otherwise None
-                bcc=[bcc] if bcc else None,  # Convert bcc to list if not empty, otherwise None
             )
 
             # Attach files to the email, if any
@@ -381,9 +377,12 @@ def send_email(request):
         form = EmailForm()
     return render(request, 'dashboard/send_email.html', {'form': form})
 
-from django.shortcuts import render, redirect
+
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import UploadedFile
 from .forms import FileUploadForm
+from django.http import HttpResponse
+import os
 
 def upload_file(request):
     if request.method == 'POST':
@@ -406,10 +405,14 @@ def download_file(request, file_id):
         response = HttpResponse(file.read(), content_type='application/force-download')
         response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
         return response
+
 def delete_file(request, file_id):
-    file = UploadedFile.objects.get(id=file_id)
-    file.delete()
+    file = get_object_or_404(UploadedFile, id=file_id)
+    # Check if the file belongs to the current user
+    if file.user == request.user:
+        file.delete()
     return redirect('showfile')
+
 # faq_chatbot/views.py
 
 from django.shortcuts import render

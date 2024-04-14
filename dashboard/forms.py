@@ -37,11 +37,10 @@ from django import forms
 
 class EmailForm(forms.Form):
     recipient = forms.EmailField(label='To')
-    cc = forms.EmailField(label='CC', required=False)
-    bcc = forms.EmailField(label='BCC', required=False)
     subject = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea)
     attachments = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+
 
 from django import forms
 from .models import UploadedFile
