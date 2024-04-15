@@ -16,13 +16,19 @@ import random
 def home(request):
     return render(request, 'dashboard/home.html')
 #Method to open notes feature and create new notes
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views import generic
+from .forms import NotesForm
+from .models import Notes
+from django.contrib.auth.decorators import login_required
+
 @login_required
 def notes(request):
     if request.method == "POST":
         form = NotesForm(request.POST)
         if form.is_valid():
-            notes = Notes(
-                user=request.user, title=request.POST['title'], description=request.POST['description'])
+            notes = Notes(user=request.user, title=request.POST['title'], description=request.POST['description'])
             notes.save()
             messages.success(request, f"Notes Added from {request.user.username} successfully!")
             return redirect("notes")
@@ -32,15 +38,32 @@ def notes(request):
     context = {'notes': notes, 'form': form}
     return render(request, 'dashboard/notes.html', context)
 
-#Method to delete an existing note
 @login_required
-def delete_note(request, pk=None):
-    Notes.objects.get(id=pk).delete()
-    return redirect("notes")
+def update_note(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    form = NotesForm(request.POST or None, instance=note)
+    if form.is_valid():
+        form.update_instance(note)
+        messages.success(request, f"Note Updated from {request.user.username} successfully!")
+        return redirect('notes')
+    return render(request, 'dashboard/note_update.html', {'form': form})
 
-#class to have detailed view of a individual note
+@login_required
+def share_note(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    # Add your share logic here
+    return redirect('notes')
+
+@login_required
+def delete_note(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    note.delete()
+    messages.success(request, f"Note Deleted from {request.user.username} successfully!")
+    return redirect('notes')
+
 class NotesDetailView(generic.DetailView):
     model = Notes
+
 
 #Method to open Homework feature and create a new homework along with assigning a date of completion to it
 @login_required

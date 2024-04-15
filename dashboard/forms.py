@@ -9,6 +9,12 @@ class NotesForm(forms.ModelForm):
         model = Notes
         fields = ['title', 'description']
 
+    def update_instance(self, instance):
+        instance.title = self.cleaned_data['title']
+        instance.description = self.cleaned_data['description']
+        instance.save()
+
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 

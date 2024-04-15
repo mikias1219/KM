@@ -4,17 +4,25 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+from django.urls import reverse
+from django.utils import timezone
+
 class Notes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('notes-detail', args=[str(self.id)])
+
     class Meta:
         verbose_name = "notes"
         verbose_name_plural = "notes"
+
 class Homework(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=50)

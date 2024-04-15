@@ -1,3 +1,4 @@
+<!-- dashboard/notes.html -->
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -11,8 +12,16 @@
         <div class="card">
           <div class="card-header">{{note.title}}</div>
           <div class="card-body">{{note.description|slice:"0:100"}}</div>
-          <div class="card-footer mt-auto"><a href="{% url 'delete-note' note.id %}">
-              <i class="fa fa-trash fa-2x"></i></a>
+          <div class="card-footer mt-auto">
+            <a href="{% url 'delete-note' note.id %}">
+              <i class="fa fa-trash fa-2x"></i>
+            </a>
+            <a href="{% url 'update-note' note.id %}">
+              <i class="fa fa-edit fa-2x"></i>
+            </a>
+            <a href="{% url 'share-note' note.id %}">
+              <i class="fa fa-share fa-2x"></i>
+            </a>
           </div>
         </div>
       </a>
