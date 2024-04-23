@@ -24,7 +24,8 @@ urlpatterns = [
     path('dictionary', views.dictionary,name="dictionary"),
 
     path('wiki', views.wiki,name="wiki"),
-
+ path('chat/', views.chat, name='chat'),
+    path('chat/user/<int:user_id>/', views.chat_with_user, name='chat_with_user'),
     path('expense', views.expense,name="expense"),
     path('sendemail', views.send_email,name="sendemail"),
     path('upload', views.upload_file,name="upload"),

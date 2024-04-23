@@ -45,7 +45,7 @@ class EmailForm(forms.Form):
     recipient = forms.EmailField(label='To')
     subject = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea)
-    attachments = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    attachments = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': False}), required=False)
 
 
 from django import forms

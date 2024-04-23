@@ -451,3 +451,17 @@ def chatbot(request):
         else:
             response = "Sorry, I couldn't find an answer to your question."
     return render(request, 'dashboard/chatbot.html', {'response': response})
+# views.py
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
+from .models import Message
+
+def chat(request):
+    users = User.objects.exclude(id=request.user.id)
+    return render(request, 'dashboard/chat.html', {'users': users})
+
+def chat_with_user(request, user_id):
+    other_user = get_object_or_404(User, pk=user_id)
+    messages = Message.objects.filter(sender=request.user, receiver=other_user) | Message.objects.filter(sender=other_user, receiver=request.user)
+    return render(request, 'dashboard/chat_with_user.html', {'other_user': other_user, 'messages': messages})
+

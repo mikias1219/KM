@@ -1,0 +1,154 @@
+﻿1. Program to Compute Integers Greater Than or Equal to 10 in an Array
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    const int SIZE = 10;
+    int arr[SIZE];
+    int count = 0;
+
+    cout << "Enter 10 integers:" << endl;
+    for (int i = 0; i < SIZE; i++) {
+        cin >> arr[i];
+        if (arr[i] >= 10) {
+            count++;
+        }
+    }
+
+    cout << "Number of integers greater than or equal to 10: " << count << endl;
+
+    return 0;
+}
+
+2. Program to Define and Print Book Information Using Structures
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Book {
+    string title;
+    string author;
+    string subject;
+    int bookId;
+};
+
+int main() {
+    Book book1 = {"Book Title 1", "Author 1", "Subject 1", 12345};
+    Book book2 = {"Book Title 2", "Author 2", "Subject 2", 67890};
+
+    cout << "Book 1 Information:" << endl;
+    cout << "Title: " << book1.title << endl;
+    cout << "Author: " << book1.author << endl;
+    cout << "Subject: " << book1.subject << endl;
+    cout << "Book ID: " << book1.bookId << endl << endl;
+
+    cout << "Book 2 Information:" << endl;
+    cout << "Title: " << book2.title << endl;
+    cout << "Author: " << book2.author << endl;
+    cout << "Subject: " << book2.subject << endl;
+    cout << "Book ID: " << book2.bookId << endl;
+
+    return 0;
+}
+
+
+ 3. Program to Append Two Arrays and Display the Result
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[4] = {1, 2, 3, 4};
+    int b[4] = {5, 6, 7, 8};
+    int c[8];
+
+    for (int i = 0; i < 4; i++) {
+        c[i] = a[i];
+        c[i + 4] = b[i];
+    }
+
+    cout << "Array C after appending arrays A and B:" << endl;
+    for (int i = 0; i < 8; i++) {
+        cout << c[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+
+ 4. Program to Display a Calculator Menu and Perform Operations
+
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int choice, a, b;
+
+    cout << "Calculator Menu:" << endl;
+    cout << "1. Addition" << endl;
+    cout << "2. Subtraction" << endl;
+    cout << "3. Multiplication" << endl;
+    cout << "4. Division" << endl;
+    cout << "5. Modulus" << endl;
+    cout << "Choose an operation (1-5): ";
+    cin >> choice;
+
+    cout << "Enter two integers: ";
+    cin >> a >> b;
+
+    switch(choice) {
+        case 1:
+            cout << "Result: " << a + b << endl;
+            break;
+        case 2:
+            cout << "Result: " << a - b << endl;
+            break;
+        case 3:
+            cout << "Result: " << a * b << endl;
+            break;
+        case 4:
+            if (b != 0) {
+                cout << "Result: " << a / b << endl;
+            } else {
+                cout << "Cannot divide by zero." << endl;
+            }
+            break;
+        case 5:
+            cout << "Result: " << a % b << endl;
+            break;
+        default:
+            cout << "Invalid choice." << endl;
+    }
+
+    return 0;
+}
+
+
+
+MENU 
+1. Add 
+2. Subtract 
+3. Multiply 
+4. Divide 
+5. Modulus 
+Enter your choice: 1 
+Enter your two numbers: 12 15 
+Result: 27 
+Continue? Y
+The program also asks the user to decide whether he/she wants to continue the operation. If he/she input ‘y’, the program will prompt the user to choose the operation gain. Otherwise, the program will terminate.
+5. Write a program that will ask the user to input three integer values from the keyboard. Then it will print the smallest and largest of those numbers
+6. Write a C++ program to pass an array containing age of person to a function. This function should find average age and display the average age in main function.
+7. Write a program that asks for an index and a number. Then it includes the number at the indicated index of the array ={1,2,3,4,5,6} and moves a position forward (from u to u+1) each element after the selected index.
+Pointer Exercise
+8. Write block of code that take an input from the user and display the same value using pointer.
+9. Write a program that asks the user to enter integers as inputs to be stored in the variables 'a' and 'b' respectively. There are also two integer pointers named ptrA and ptrB. Assign the values of 'a' and 'b' to ptrA and ptrB respectively, and display them.
+10. Write a C++ program to accept five integer values from keyword and print the elements of the array in reverse order using a pointer.
+11. Write a function countEven(int*, int) which receives an integer array and its size, and returns the number of even numbers in the array.
+12. Write two functions void cubeByPtr1 ( int * numPtr ) and void cubeByPtr2 ( int & numPtr ) which returns a cube of a number.
+13. Given the string "A string." Print on one line the letter on the index 0, the pointer position and the letter t. undate the pointer to pointer +2. Then, in another line print the pointer and the letters r and g of the string (using the pointer).

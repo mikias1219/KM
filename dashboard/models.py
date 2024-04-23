@@ -85,3 +85,11 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+class Message(models.Model):
+    sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name='receiver', on_delete=models.CASCADE)
+    message = models.TextField()
+    sent_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"From {self.sender} to {self.receiver}: {self.message}"
