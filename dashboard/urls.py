@@ -31,6 +31,6 @@ urlpatterns = [
     path('upload', views.upload_file,name="upload"),
     path('download/<int:file_id>/', views.download_file, name='download'),
     path('showfile', views.file_list,name="showfile"),
-    
+    path('logout/', views.custom_logout, name='logout')
 
 ]

@@ -465,3 +465,9 @@ def chat_with_user(request, user_id):
     messages = Message.objects.filter(sender=request.user, receiver=other_user) | Message.objects.filter(sender=other_user, receiver=request.user)
     return render(request, 'dashboard/chat_with_user.html', {'other_user': other_user, 'messages': messages})
 
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+
+def custom_logout(request):
+    logout(request)
+    return redirect('login')  # Redirect to a specific URL after logout
