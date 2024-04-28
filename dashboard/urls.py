@@ -29,8 +29,12 @@ urlpatterns = [
     path('expense', views.expense,name="expense"),
     path('sendemail', views.send_email,name="sendemail"),
     path('upload', views.upload_file,name="upload"),
-    path('download/<int:file_id>/', views.download_file, name='download'),
+    #path('download/<int:file_id>/', views.download_file, name='download'),
     path('showfile', views.file_list,name="showfile"),
-    path('logout/', views.custom_logout, name='logout')
+    path('logout/', views.custom_logout, name='logout'),
+    path('search-user/', views.search_user, name='search_user'),
+    #path('send-file/<int:user_id>/', views.send_file, name='send_file'),
+    path('send-file/<int:user_id>/', views.send_file, name='send_file'),
+    path('download-file/<int:file_id>/', views.download_file, name='download_file'),
 
 ]
