@@ -421,7 +421,7 @@ def file_list(request):
     files = UploadedFile.objects.all()
     return render(request, 'dashboard/file_list.html', {'files': files})
 
-def download_file(request, file_id):
+#def download_file(request, file_id):
     uploaded_file = UploadedFile.objects.get(id=file_id)
     file_path = uploaded_file.file.path
     with open(file_path, 'rb') as file:
@@ -471,3 +471,50 @@ from django.shortcuts import redirect
 def custom_logout(request):
     logout(request)
     return redirect('login')  # Redirect to a specific URL after logout
+def search_user(request):
+    query = request.GET.get('q', '')
+    users = User.objects.filter(username__icontains=query)
+    return render(request, 'dashboard/search_user.html', {'users': users, 'query': query})
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import FileResponse
+from .models import UploadedFile
+from .forms import FileUploadForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import UploadedFile
+from .forms import FileUploadForm
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
+from django.http import FileResponse
+from .models import UploadedFile
+from .forms import FileUploadForm
+
+@login_required
+def send_file(request, user_id):
+    selected_user = get_object_or_404(User, pk=user_id)
+    
+    if request.method == 'POST':
+        form = FileUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            uploaded_file = form.save(commit=False)
+            uploaded_file.user = selected_user
+            uploaded_file.save()
+            # Redirect to the same page to prevent duplicate form submissions
+            return redirect('send_file', user_id=user_id)
+    else:
+        form = FileUploadForm()
+
+    # Only show files that belong to the currently logged-in user
+    files = UploadedFile.objects.filter(user=request.user)
+
+    return render(request, 'dashboard/send_file.html', {'selected_user': selected_user, 'form': form, 'files': files})
+
+@login_required
+def download_file(request, file_id):
+    uploaded_file = get_object_or_404(UploadedFile, id=file_id)
+    file_path = uploaded_file.file.path
+    response = FileResponse(open(file_path, 'rb'))
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(uploaded_file.file.name)
+    return response
