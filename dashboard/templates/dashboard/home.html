@@ -4,14 +4,18 @@
 
 <section class="container text-center">
   <h2>Welcome</h2>
-  <div>
-    <h2>Users</h2>
-    <ul>
-        {% for user in users %}
-            <li><a href="{% url 'dashboard:chat_with_user' user.id %}">{{ user.username }}</a></li>
-        {% endfor %}
-    </ul>
-</div>
+  <a href="{% url 'search_user' %}">Search User</a>
+ 
+<h1>Download Files</h1>
+<ul>
+    {% for file in files %}
+    <li><a href="{% url 'download_file' file.id %}">{{ file.file.name }}</a></li>
+    {% empty %}
+    <li>No files uploaded yet.</li>
+    {% endfor %}
+</ul>
+
+
   <hr> <br>
   <div class="row">
   <div class="col-md-3">
