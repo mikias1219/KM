@@ -4,16 +4,11 @@
 
 <section class="container text-center">
   <h2>Welcome</h2>
-  <a href="{% url 'search_user' %}">Search User</a>
- 
-<h1>Download Files</h1>
+<p>Welcome to the Dashboard. You can use the following links to navigate:</p>
 <ul>
-    {% for file in files %}
-    <li><a href="{% url 'download_file' file.id %}">{{ file.file.name }}</a></li>
-    {% empty %}
-    <li>No files uploaded yet.</li>
-    {% endfor %}
+    <li><a href="{% url 'search_user' %}">Search User</a></li>
 </ul>
+ 
 
 
   <hr> <br>
