@@ -1,0 +1,11 @@
+<h1>{{ group.name }}</h1>
+<div>
+    {% for message in messages %}
+        <p><strong>{{ message.sender.username }}:</strong> {{ message.text }}</p>
+    {% endfor %}
+</div>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="message" placeholder="Type your message">
+    <button type="submit">Send</button>
+</form>

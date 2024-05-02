@@ -1,0 +1,27 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Received Files</h1>
+    {% if files %}
+    <div class="row">
+        {% for file in files %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">File: {{ file.file.name }}</h5>
+                    <p class="card-text">Sender: {{ file.sender.username }}</p>
+                    <a href="{% url 'download_file' file.id %}" class="btn btn-primary">Download File</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col">
+            <p>No files received yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No files received yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

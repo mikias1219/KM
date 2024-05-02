@@ -1,17 +1,9 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
-<h1>Send File to {{ user.username }}</h1>
+<h1>Send File to {{ receiver.username }}</h1>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
 </form>
-<h2>Uploaded Files:</h2>
-<ul>
-    {% for file in files %}
-    <li><a href="{% url 'download_file' file.id %}">{{ file.file.name }}</a></li>
-    {% empty %}
-    <li>No files uploaded yet.</li>
-    {% endfor %}
-</ul>
 {% endblock %}

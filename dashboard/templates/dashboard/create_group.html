@@ -1,0 +1,8 @@
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="group_name" placeholder="Group Name">
+    {% for user in users %}
+        <input type="checkbox" name="members" value="{{ user.id }}"> {{ user.username }}<br>
+    {% endfor %}
+    <button type="submit">Create Group</button>
+</form>

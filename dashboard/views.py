@@ -499,6 +499,7 @@ def send_file(request, user_id):
         form = FileUploadForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = form.save(commit=False)
+            uploaded_file.sender = request.user  # Save sender's information
             uploaded_file.user = selected_user
             uploaded_file.save()
             # Redirect to the same page to prevent duplicate form submissions
@@ -510,6 +511,15 @@ def send_file(request, user_id):
     files = UploadedFile.objects.filter(user=request.user)
 
     return render(request, 'dashboard/send_file.html', {'selected_user': selected_user, 'form': form, 'files': files})
+
+
+@login_required
+def received_files(request):
+    # Retrieve files that the currently logged-in user has received
+    files = UploadedFile.objects.filter(user=request.user)
+    
+    return render(request, 'dashboard/received_files.html', {'files': files})
+
 
 @login_required
 def download_file(request, file_id):

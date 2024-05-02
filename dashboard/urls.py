@@ -36,5 +36,5 @@ urlpatterns = [
     #path('send-file/<int:user_id>/', views.send_file, name='send_file'),
     path('send-file/<int:user_id>/', views.send_file, name='send_file'),
     path('download-file/<int:file_id>/', views.download_file, name='download_file'),
-
+path('received-files/', views.received_files, name='received_files'),
 ]

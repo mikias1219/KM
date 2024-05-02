@@ -1,18 +1,33 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
-<h1>Search Users</h1>
-<form method="GET" action="{% url 'search_user' %}">
-    <input type="text" name="q" placeholder="Search...">
-    <button type="submit">Search</button>
-</form>
-<ul>
-    {% for user in users %}
-    <li>{{ user.username }} - <a href="{% url 'send_file' user.id %}">Send File</a></li>
-    {% empty %}
-    <li>No results found.</li>
-    {% endfor %}
-</ul>
-<li class="nav-item">
-    <a class="nav-link" href="{% url 'home' %}">Home</a>
-</li>
+<div class="container mt-5">
+    <h1>Search Users</h1>
+    <form method="GET" action="{% url 'search_user' %}">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="q" placeholder="Search..." aria-label="Search" aria-describedby="button-search">
+            <button class="btn btn-primary" type="submit" id="button-search">Search</button>
+        </div>
+    </form>
+    <hr>
+    {% if users %}
+    <div class="row">
+        {% for user in users %}
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.username }}</h5>
+                    <p class="card-text">Email: {{ user.email }}</p>
+                    <a href="{% url 'send_file' user.id %}" class="btn btn-primary">Send File</a>
+                    <a href="{% url 'received_files' %}" class="btn btn-secondary">Received Files</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col">
+            <p>No results found.</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
