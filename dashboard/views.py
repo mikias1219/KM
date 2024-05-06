@@ -471,7 +471,6 @@ from django.shortcuts import redirect
 def custom_logout(request):
     logout(request)
     return redirect('login')  # Redirect to a specific URL after logout
-@login_required
 def search_user(request):
     query = request.GET.get('q', '')
     users = User.objects.filter(username__icontains=query)
@@ -529,4 +528,3 @@ def download_file(request, file_id):
     response = FileResponse(open(file_path, 'rb'))
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(uploaded_file.file.name)
     return response
-#hi

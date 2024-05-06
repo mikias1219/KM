@@ -1,5 +1,12 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
+<style>
+    /* Add custom styling for the received files section */
+    .card {
+        margin-bottom: 20px;
+    }
+</style>
+
 <div class="container mt-5">
     <h1>Received Files</h1>
     {% if files %}
@@ -10,6 +17,7 @@
                 <div class="card-body">
                     <h5 class="card-title">File: {{ file.file.name }}</h5>
                     <p class="card-text">Sender: {{ file.sender.username }}</p>
+                    <p class="card-text">Sent on: {{ file.uploaded_at }}</p>
                     <a href="{% url 'download_file' file.id %}" class="btn btn-primary">Download File</a>
                 </div>
             </div>
