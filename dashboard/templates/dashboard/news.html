@@ -1,0 +1,68 @@
+<!-- news.html -->
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<div class="container">
+    <h2 class="news-heading">Latest News</h2>
+    <div class="news-list">
+        {% for news_item in news_items %}
+        <div class="news-item">
+            <h3 class="news-title">{{ news_item.title }}</h3>
+            <p class="news-content">{{ news_item.content }}</p>
+            <p class="news-info">Posted by {{ news_item.author }} on {{ news_item.date_posted }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<!-- Add the following CSS to your base.html or separate CSS file -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+
+    .news-heading {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .news-list {
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+    }
+
+    .news-item {
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .news-title {
+        color: #333;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .news-content {
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .news-info {
+        color: #888;
+        font-size: 14px;
+    }
+</style>

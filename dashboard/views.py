@@ -1,28 +1,72 @@
 import os
+import random
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from . forms import *
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import *
 from django.contrib import messages
 from django.views import generic
 from youtubesearchpython import VideosSearch
 import requests
 import wikipedia
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
-import random
-# Create your views here.
+from django.http import HttpResponse, FileResponse
+from .models import Notes, UploadedFile
+from .forms import NotesForm, FileUploadForm
+from django.core.mail import EmailMessage
+from .forms import EmailForm
+from django.conf import settings
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
+from .models import News
 
 def home(request):
-    return render(request, 'dashboard/home.html')
-#Method to open notes feature and create new notes
-from django.contrib import messages
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views import generic
-from .forms import NotesForm
-from .models import Notes
-from django.contrib.auth.decorators import login_required
+    news_items = News.objects.all().order_by('-date_posted')[:5]  # Get the latest 5 news items
+    context = {'news_items': news_items}
+    return render(request, 'dashboard/home.html', context)
 
+
+@login_required
+def notes(request):
+    if request.method == "POST":
+        form = NotesForm(request.POST)
+        if form.is_valid():
+            notes = Notes(user=request.user, title=request.POST['title'], description=request.POST['description'])
+            notes.save()
+            messages.success(request, f"Notes Added from {request.user.username} successfully!")
+            return redirect("notes")
+    else:
+        form = NotesForm()
+    notes = Notes.objects.filter(user=request.user)
+    context = {'notes': notes, 'form': form}
+    return render(request, 'dashboard/notes.html', context)
+
+@login_required
+def update_note(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    form = NotesForm(request.POST or None, instance=note)
+    if form.is_valid():
+        form.save()
+        messages.success(request, f"Note Updated from {request.user.username} successfully!")
+        return redirect('notes')
+    return render(request, 'dashboard/note_update.html', {'form': form})
+
+@login_required
+def delete_note(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    note.delete()
+    messages.success(request, f"Note Deleted from {request.user.username} successfully!")
+    return redirect('notes')
+
+class NotesDetailView(generic.DetailView):
+    model = Notes
+
+# Add your other views here...
+
+
+# Create your views here.
+def home(request):
+    return render(request, 'dashboard/home.html')
 @login_required
 def notes(request):
     if request.method == "POST":
@@ -63,8 +107,6 @@ def delete_note(request, pk):
 
 class NotesDetailView(generic.DetailView):
     model = Notes
-
-
 #Method to open Homework feature and create a new homework along with assigning a date of completion to it
 @login_required
 def homework(request):
@@ -367,10 +409,7 @@ def profile(request):
     }
 
     return render(request, "dashboard/profile.html", context)
-from django.core.mail import send_mail, EmailMessage
-from django.conf import settings
-from django.shortcuts import render
-from .forms import EmailForm
+
 
 def send_email(request):
     if request.method == 'POST':
@@ -399,13 +438,6 @@ def send_email(request):
     else:
         form = EmailForm()
     return render(request, 'dashboard/send_email.html', {'form': form})
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import UploadedFile
-from .forms import FileUploadForm
-from django.http import HttpResponse
-import os
 
 def upload_file(request):
     if request.method == 'POST':
@@ -452,9 +484,6 @@ def chatbot(request):
             response = "Sorry, I couldn't find an answer to your question."
     return render(request, 'dashboard/chatbot.html', {'response': response})
 # views.py
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
-from .models import Message
 
 def chat(request):
     users = User.objects.exclude(id=request.user.id)
@@ -465,9 +494,6 @@ def chat_with_user(request, user_id):
     messages = Message.objects.filter(sender=request.user, receiver=other_user) | Message.objects.filter(sender=other_user, receiver=request.user)
     return render(request, 'dashboard/chat_with_user.html', {'other_user': other_user, 'messages': messages})
 
-from django.contrib.auth import logout
-from django.shortcuts import redirect
-
 def custom_logout(request):
     logout(request)
     return redirect('login')  # Redirect to a specific URL after logout
@@ -475,21 +501,6 @@ def search_user(request):
     query = request.GET.get('q', '')
     users = User.objects.filter(username__icontains=query)
     return render(request, 'dashboard/search_user.html', {'users': users, 'query': query})
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import FileResponse
-from .models import UploadedFile
-from .forms import FileUploadForm
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import UploadedFile
-from .forms import FileUploadForm
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User
-from django.http import FileResponse
-from .models import UploadedFile
-from .forms import FileUploadForm
 
 @login_required
 def send_file(request, user_id):
@@ -520,7 +531,6 @@ def received_files(request):
     
     return render(request, 'dashboard/received_files.html', {'files': files})
 
-
 @login_required
 def download_file(request, file_id):
     uploaded_file = get_object_or_404(UploadedFile, id=file_id)
@@ -528,3 +538,11 @@ def download_file(request, file_id):
     response = FileResponse(open(file_path, 'rb'))
     response['Content-Disposition'] = 'attachment; filename="{}"'.format(uploaded_file.file.name)
     return response
+from django.shortcuts import render
+from .models import News
+
+def news(request):
+    news_items = News.objects.all().order_by('-date_posted')
+    context = {'news_items': news_items}
+    return render(request, 'dashboard/news.html', context)
+
