@@ -546,3 +546,26 @@ def news(request):
     context = {'news_items': news_items}
     return render(request, 'dashboard/news.html', context)
 
+# views.py
+from django.shortcuts import render, redirect
+from .models import Announcement
+from .forms import AnnouncementForm
+
+def announcements(request):
+    announcements = Announcement.objects.all().order_by('-date_posted')
+    return render(request, 'dashboard/announcements.html', {'announcements': announcements})
+from django.shortcuts import render, redirect
+from .forms import AnnouncementForm
+from .models import Announcement
+
+def create_announcement(request):
+    if request.method == 'POST':
+        form = AnnouncementForm(request.POST)
+        if form.is_valid():
+            announcement = form.save(commit=False)
+            announcement.creator = request.user  # Assuming creator is the correct field name
+            announcement.save()
+            return redirect('announcements')  # Assuming 'announcements' is the URL name for listing announcements
+    else:
+        form = AnnouncementForm()
+    return render(request, 'dashboard/create_announcement.html', {'form': form})

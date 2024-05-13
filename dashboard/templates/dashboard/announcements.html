@@ -1,0 +1,29 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<section class="container" style="margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+    <h2 style="color: #333; text-align: center;">Announcements</h2>
+    {% if announcements %}
+        <ul style="list-style-type: none; padding: 0;">
+            {% for announcement in announcements %}
+                <li style="margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                    <h3 style="color: #007bff; font-size: 1.2em; margin-bottom: 5px;">{{ announcement.title }}</h3>
+                    <p style="color: #333; font-size: 1em;">{{ announcement.content }}</p>
+                    <p style="color: #888; font-size: 0.8em;">Created by: {{ announcement.creator.username }}, {{ announcement.date_posted }}</p>
+                    <h4 style="color: #888; margin-top: 10px;">Modifications:</h4>
+                    <ul style="list-style-type: none; padding: 0;">
+                        {% for modification in announcement.announcementmodification_set.all %}
+                            <li style="margin-bottom: 10px;">
+                                <span style="font-weight: bold;">{{ modification.modifier.username }}</span> - 
+                                <span style="color: #999; font-size: 0.8em;">{{ modification.modification_time }}</span>
+                                <p>{{ modification.modified_content }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p style="text-align: center;">No announcements available.</p>
+    {% endif %}
+</section>
+{% endblock %}

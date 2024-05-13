@@ -1,190 +1,126 @@
-<style>
-  /* styles.css */
-
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-h2 {
-  color: #333;
-}
-
-p {
-  color: #666;
-}
-
-h3 {
-  color: #333;
-  margin-top: 20px;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 5px;
-}
-
-.navigation-links {
-  margin-top: 20px;
-}
-
-.btn {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-.btn-secondary {
-  background-color: #6c757d;
-}
-
-</style>
-
 {% extends 'dashboard/base.html' %}
 {% load static %}
 {% block content %}
 
 <section class="container text-center">
-  <div class="container">
-    <h2>Welcome</h2>
-    <p>Welcome to the Dashboard. You can use the following links to navigate:</p>
+  <h2>Welcome</h2>
+  <p>Welcome to the Dashboard. You can use the following links to navigate:</p>
 
-    <h3>Latest News</h3>
-    <ul>
-        {% for news_item in news_items %}
-        <li>{{ news_item.title }} - {{ news_item.date_posted }}</li>
-        {% endfor %}
-    </ul>
-
-    <div class="navigation-links">
-        <a href="{% url 'news' %}" class="btn btn-primary">News</a>
-        <a href="{% url 'search_user' %}" class="btn btn-secondary">Search User</a>
+  <div class="row">
+    <div class="col-md-6">
+        <div class="navigation-links">
+            <a href="{% url 'news' %}" class="btn btn-primary">News</a>
+            <a href="{% url 'search_user' %}" class="btn btn-secondary">Search User</a>
+            <a href="{% url 'received_files' %}" class="btn btn-secondary">Received Files</a>
+            <a href="{% url 'announcements' %}" class="btn btn-secondary">Announcements</a>
+            <a href="{% url 'create_announcement' %}" class="btn btn-secondary">Create Announcement</a>
+        </div>
     </div>
 </div>
-  <hr> <br>
+
+
+  <hr>
+
   <div class="row">
-  <div class="col-md-3">
-    <a href="{% url 'youtube' %}">
-      <div class="card">
-        <img class="card-img-top" src="{% static 'images/Youtube Img.jpg' %}" alt="Youtube image">
-        <div class="card-body">
-          <h5 style="font-weight: bold;" class="card-title ">
-            Youtube Search
-          </h5>
-          Search Youtube and select your desired video to play it on youtube
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="col-md-3 ">
-    <a href="{% url 'books' %}">
-      <div class="card mt-20">
-        <img class="card-img-top" src="{% static 'images/Book Search Img.jpg' %}" alt="Book Search image">
-        <div class="card-body">
-          <h5 style="font-weight: bold;" class="card-title ">
-            Books Search
-          </h5>
-          Browse books from a list of neatly organised book menu
-        </div>
-      </div>
-    </a>
-  </div>
-    <div class="col-md-3">
-      <a href="{% url 'dictionary' %}">
+    <div class="col-md-4">
+      <a href="{% url 'youtube' %}">
         <div class="card">
-          <img class="card-img-top" src="{% static 'images/Dictionary Img.jpg' %}" alt="Dictionary image">
+          <img class="card-img-top" src="{% static 'images/Youtube Img.jpg' %}" alt="Youtube image">
           <div class="card-body">
-            <h5 style="font-weight: bold;" class="card-title ">
-              Dictionary
-            </h5>
-            A vocabulary from a book is troubling you? No problem, enter the word, and the meaning will be displayed
-            almost instantaneously.
+            <h5 style="font-weight: bold;" class="card-title">Youtube Search</h5>
+            Search and play videos from Youtube
           </div>
         </div>
       </a>
     </div>
-
-    <div class="col-md-3">
-      <a href="{% url 'wiki' %}">
-        <div class="card">
-          <img class="card-img-top" src="{% static 'images/WikiPedia Img.jpg' %}" alt="Wikipedia image">
-          <div class="card-body">
-            <h5 style="font-weight: bold;" class="card-title ">
-              WikiPedia
-            </h5>
-            Homework and Assignments? Search wikipedia to get fast results
-          </div>
-        </div>
-      </a>
-    </div>
-
-  </div>
-  <br><br><br>
-  <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <a href="{% url 'notes' %}">
         <div class="card">
           <img class="card-img-top" src="{% static 'images/Notes Img.jpg' %}" alt="Notes image">
           <div class="card-body">
-            <h5 style="font-weight: bold;" class="card-title ">
-              Notes
-            </h5>
-            Create Notes to refer them later. They are stored permanently until deleted
+            <h5 style="font-weight: bold;" class="card-title">Notes</h5>
+            Create and manage your notes
           </div>
         </div>
       </a>
     </div>
-    <div class="col-md-3">
-      <a href="{% url 'homework' %}">
+    <div class="col-md-4">
+      <a href="{% url 'books' %}">
         <div class="card">
-          <img class="card-img-top" src="{% static 'images/Homework Img.jpg' %}" alt="Homewrok image">
+          <img class="card-img-top" src="{% static 'images/Book Search Img.jpg' %}" alt="Book Search image">
           <div class="card-body">
-            <h5 style="font-weight: bold;" class="card-title ">
-              Homework
-            </h5>
-            Add homeworks and assign them deadlines. They will be displayed prioritised by deadlines
-          </div>
-        </div>
-      </a>
-    </div>
-
-    <div class="col-md-3">
-      <a href="{% url 'todo' %}">
-        <div class="card">
-          <img class="card-img-top" src="{% static 'images/Todo Img.jpg' %}" alt="Todos image">
-          <div class="card-body">
-            <h5 style="font-weight: bold;" class="card-title ">
-              To Do
-            </h5>
-            Add your to-do lists for your day and remove them as you finish
-          </div>
-        </div>
-      </a>
-    </div>
-
-    <div class="col-md-3">
-      <a href="{% url 'expense' %}">
-        <div class="card">
-          <img class="card-img-top" src="{% static 'images/Expense Img.jpg' %}" alt="Expense tracker image">
-          <div class="card-body">
-            <h5 style="font-weight: bold;" class="card-title ">
-              Expense Tracker
-            </h5>
-            To manage your monthly expenses.
+            <h5 style="font-weight: bold;" class="card-title">Books Search</h5>
+            Browse and discover books
           </div>
         </div>
       </a>
     </div>
   </div>
 
+  <br><br>
 
+  <div class="row">
+    <div class="col-md-4">
+      <a href="{% url 'dictionary' %}">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'images/Dictionary Img.jpg' %}" alt="Dictionary image">
+          <div class="card-body">
+            <h5 style="font-weight: bold;" class="card-title">Dictionary</h5>
+            Look up word meanings
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'wiki' %}">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'images/WikiPedia Img.jpg' %}" alt="Wikipedia image">
+          <div class="card-body">
+            <h5 style="font-weight: bold;" class="card-title">Wikipedia</h5>
+            Search and read Wikipedia articles
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'todo' %}">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'images/Todo Img.jpg' %}" alt="Todos image">
+          <div class="card-body">
+            <h5 style="font-weight: bold;" class="card-title">To Do</h5>
+            Manage your tasks and to-do lists
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="row">
+    <div class="col-md-4">
+      <a href="{% url 'homework' %}">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'images/Homework Img.jpg' %}" alt="Homework image">
+          <div class="card-body">
+            <h5 style="font-weight: bold;" class="card-title">Homework</h5>
+            Manage and track your homework assignments
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4">
+      <a href="{% url 'expense' %}">
+        <div class="card">
+          <img class="card-img-top" src="{% static 'images/Expense Img.jpg' %}" alt="Expense tracker image">
+          <div class="card-body">
+            <h5 style="font-weight: bold;" class="card-title">Expense Tracker</h5>
+            Track and manage your expenses
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
+
 {% endblock content %}

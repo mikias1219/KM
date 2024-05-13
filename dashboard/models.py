@@ -105,3 +105,32 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+# models.py
+from django.db import models
+from django.contrib.auth.models import User
+# models.py
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class Announcement(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    date_posted = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+# models.py
+
+class AnnouncementModification(models.Model):
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE)
+    modifier = models.ForeignKey(User, on_delete=models.CASCADE)
+    modification_time = models.DateTimeField(auto_now_add=True)
+    modified_content = models.TextField()
+
+    def __str__(self):
+        return f"{self.modification_time} - {self.modifier.username}"
+
+

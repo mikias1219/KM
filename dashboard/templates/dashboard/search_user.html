@@ -1,6 +1,40 @@
 {% extends 'dashboard/base.html' %}
+
 {% block content %}
 <div class="container mt-5">
+    <style>
+        .card {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+    </style>
+    
     <h1>Search Users</h1>
     <form method="GET" action="{% url 'search_user' %}">
         <div class="input-group mb-3">
@@ -18,7 +52,6 @@
                     <h5 class="card-title">{{ user.username }}</h5>
                     <p class="card-text">Email: {{ user.email }}</p>
                     <a href="{% url 'send_file' user.id %}" class="btn btn-primary">Send File</a>
-                    <a href="{% url 'received_files' %}" class="btn btn-secondary">Received Files</a>
                 </div>
             </div>
         </div>
@@ -28,6 +61,7 @@
         </div>
         {% endfor %}
     </div>
+   
     {% endif %}
 </div>
 {% endblock %}
