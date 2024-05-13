@@ -569,3 +569,21 @@ def create_announcement(request):
     else:
         form = AnnouncementForm()
     return render(request, 'dashboard/create_announcement.html', {'form': form})
+from django.shortcuts import render
+from .models import FAQ
+from .forms import FAQForm
+
+def faq(request):
+    faqs = FAQ.objects.all()
+    return render(request, 'dashboard/faq.html', {'faqs': faqs})
+
+def add_faq(request):
+    if request.method == 'POST':
+        form = FAQForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('faq')
+    else:
+        form = FAQForm()
+    return render(request, 'dashboard/add_faq.html', {'form': form})
+

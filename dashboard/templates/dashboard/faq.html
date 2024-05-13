@@ -1,0 +1,12 @@
+{% extends 'dashboard/base.html' %}
+{% block content %}
+<h2>Frequently Asked Questions</h2>
+<ul>
+    {% for faq in faqs %}
+        <li>
+            <strong>{{ faq.question }}</strong><br>
+            {{ faq.answer }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

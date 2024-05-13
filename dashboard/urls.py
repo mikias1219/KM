@@ -33,5 +33,7 @@ urlpatterns = [
     path('download-file/<int:file_id>/', views.download_file, name='download_file'),
     path('received-files/', views.received_files, name='received_files'),
     path('announcements/', views.announcements, name='announcements'),
-    path('announcements/create/', views.create_announcement, name='create_announcement')
+    path('announcements/create/', views.create_announcement, name='create_announcement'),
+    path('faq/', views.faq, name='faq'),
+    path('add_faq/', views.add_faq, name='add_faq'),
 ]
