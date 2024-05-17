@@ -5,10 +5,9 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('chatbot/', views.chatbot, name='chatbot'),
     path('news/', views.news, name='news'),
-    path('notes/', views.notes, name='notes'),
-    path('notes/<int:pk>/', views.NotesDetailView.as_view(), name='notes-detail'),
-    path('notes/update/<int:pk>/', views.update_note, name='update-note'),
-    path('notes/share/<int:pk>/', views.share_note, name='share-note'),
+  path('notes/', views.notes, name='notes'),
+    path('notes/update/<int:note_id>/', views.update_note, name='update_note'),
+   
     path('notes/delete/<int:pk>/', views.delete_note, name='delete-note'),
     path('delete/<int:file_id>/', views.delete_file, name='delete'),
     path('homework/', views.homework, name="homework"),
@@ -21,8 +20,7 @@ urlpatterns = [
     path('books/', views.books, name="books"),
     path('dictionary/', views.dictionary, name="dictionary"),
     path('wiki/', views.wiki, name="wiki"),
-    path('chat/', views.chat, name='chat'),
-    path('chat/user/<int:user_id>/', views.chat_with_user, name='chat_with_user'),
+   
     path('expense/', views.expense, name="expense"),
     path('sendemail/', views.send_email, name="sendemail"),
     path('upload/', views.upload_file, name="upload"),

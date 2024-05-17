@@ -28,7 +28,7 @@
         label {
             font-weight: bold;
         }
-        input[type="text"] {
+        select, input[type="submit"] {
             width: 80%;
             padding: 8px;
             border-radius: 4px;
@@ -57,12 +57,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>FAQ Chatbot</h1>
+        <h1>Help Desk</h1>
         <form method="post">
             {% csrf_token %}
-            <label for="user_input">Ask a question:</label><br>
-            <input type="text" id="user_input" name="user_input"><br>
-            <input type="submit" value="Submit">
+            <label for="faq_question">Select a question:</label><br>
+            <select id="faq_question" name="faq_question">
+                {% for question in faq_questions %}
+                    <option value="{{ question.id }}">{{ question.question }}</option>
+                {% endfor %}
+            </select><br>
+            <input type="submit" value="Get Answer">
         </form>
         
         {% if response %}
@@ -70,7 +74,7 @@
                 <p>{{ response }}</p>
             </div>
         {% endif %}
-        <a href="{% url 'home' %}" class="btn">Back to Home</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
     </div>
 </body>
 </html>

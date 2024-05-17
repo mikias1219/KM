@@ -26,6 +26,12 @@ def home(request):
     return render(request, 'dashboard/home.html', context)
 
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Notes
+from .forms import NotesForm
+
 @login_required
 def notes(request):
     if request.method == "POST":
@@ -33,7 +39,7 @@ def notes(request):
         if form.is_valid():
             notes = Notes(user=request.user, title=request.POST['title'], description=request.POST['description'])
             notes.save()
-            messages.success(request, f"Notes Added from {request.user.username} successfully!")
+            messages.success(request, f"Notes added successfully!")
             return redirect("notes")
     else:
         form = NotesForm()
@@ -42,14 +48,19 @@ def notes(request):
     return render(request, 'dashboard/notes.html', context)
 
 @login_required
-def update_note(request, pk):
-    note = get_object_or_404(Notes, pk=pk)
-    form = NotesForm(request.POST or None, instance=note)
-    if form.is_valid():
-        form.save()
-        messages.success(request, f"Note Updated from {request.user.username} successfully!")
-        return redirect('notes')
-    return render(request, 'dashboard/note_update.html', {'form': form})
+def update_note(request, note_id):
+    note = get_object_or_404(Notes, id=note_id, user=request.user)
+    if request.method == "POST":
+        form = NotesForm(request.POST, instance=note)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Note updated successfully!")
+            return redirect("notes")
+    else:
+        form = NotesForm(instance=note)
+    context = {'form': form, 'note': note}
+    return render(request, 'dashboard/note_update.html', context)
+
 
 @login_required
 def delete_note(request, pk):
@@ -67,47 +78,7 @@ class NotesDetailView(generic.DetailView):
 # Create your views here.
 def home(request):
     return render(request, 'dashboard/home.html')
-@login_required
-def notes(request):
-    if request.method == "POST":
-        form = NotesForm(request.POST)
-        if form.is_valid():
-            notes = Notes(user=request.user, title=request.POST['title'], description=request.POST['description'])
-            notes.save()
-            messages.success(request, f"Notes Added from {request.user.username} successfully!")
-            return redirect("notes")
-    else:
-        form = NotesForm()
-    notes = Notes.objects.filter(user=request.user)
-    context = {'notes': notes, 'form': form}
-    return render(request, 'dashboard/notes.html', context)
 
-@login_required
-def update_note(request, pk):
-    note = get_object_or_404(Notes, pk=pk)
-    form = NotesForm(request.POST or None, instance=note)
-    if form.is_valid():
-        form.update_instance(note)
-        messages.success(request, f"Note Updated from {request.user.username} successfully!")
-        return redirect('notes')
-    return render(request, 'dashboard/note_update.html', {'form': form})
-
-@login_required
-def share_note(request, pk):
-    note = get_object_or_404(Notes, pk=pk)
-    # Add your share logic here
-    return redirect('notes')
-
-@login_required
-def delete_note(request, pk):
-    note = get_object_or_404(Notes, pk=pk)
-    note.delete()
-    messages.success(request, f"Note Deleted from {request.user.username} successfully!")
-    return redirect('notes')
-
-class NotesDetailView(generic.DetailView):
-    model = Notes
-#Method to open Homework feature and create a new homework along with assigning a date of completion to it
 @login_required
 def homework(request):
     if request.method == "POST":
@@ -282,6 +253,8 @@ def books(request):
     return render(request, 'dashboard/books.html', context)
 
 #Method to perform the dictionary function
+
+@login_required
 def dictionary(request):
     if request.method == "POST":
         form = DashboardFom(request.POST)
@@ -317,6 +290,8 @@ def dictionary(request):
     return render(request, 'dashboard/dictionary.html', context)
 
 #Method to perform the WikiPedia search
+
+@login_required
 def wiki(request):
     if request.method == 'POST':
         text = request.POST['text']
@@ -411,6 +386,7 @@ def profile(request):
     return render(request, "dashboard/profile.html", context)
 
 
+@login_required
 def send_email(request):
     if request.method == 'POST':
         form = EmailForm(request.POST, request.FILES)
@@ -439,6 +415,7 @@ def send_email(request):
         form = EmailForm()
     return render(request, 'dashboard/send_email.html', {'form': form})
 
+@login_required
 def upload_file(request):
     if request.method == 'POST':
         form = FileUploadForm(request.POST, request.FILES)
@@ -461,6 +438,7 @@ def file_list(request):
         response['Content-Disposition'] = 'attachment; filename=' + os.path.basename(file_path)
         return response
 
+@login_required
 def delete_file(request, file_id):
     file = get_object_or_404(UploadedFile, id=file_id)
     # Check if the file belongs to the current user
@@ -473,30 +451,30 @@ def delete_file(request, file_id):
 from django.shortcuts import render
 from .models import FAQ
 
+@login_required
 def chatbot(request):
+    faq_questions = FAQ.objects.all()
     response = None
+
     if request.method == 'POST':
-        user_input = request.POST.get('user_input')
-        faq = FAQ.objects.filter(question__icontains=user_input).first()
-        if faq:
-            response = faq.answer
-        else:
-            response = "Sorry, I couldn't find an answer to your question."
-    return render(request, 'dashboard/chatbot.html', {'response': response})
+        question_id = request.POST.get('faq_question')
+        selected_faq = get_object_or_404(FAQ, id=question_id)
+        response = selected_faq.answer
+
+    context = {
+        'faq_questions': faq_questions,
+        'response': response,
+    }
+    return render(request, 'dashboard/chatbot.html', context)
 # views.py
 
-def chat(request):
-    users = User.objects.exclude(id=request.user.id)
-    return render(request, 'dashboard/chat.html', {'users': users})
 
-def chat_with_user(request, user_id):
-    other_user = get_object_or_404(User, pk=user_id)
-    messages = Message.objects.filter(sender=request.user, receiver=other_user) | Message.objects.filter(sender=other_user, receiver=request.user)
-    return render(request, 'dashboard/chat_with_user.html', {'other_user': other_user, 'messages': messages})
 
 def custom_logout(request):
     logout(request)
     return redirect('login')  # Redirect to a specific URL after logout
+
+@login_required
 def search_user(request):
     query = request.GET.get('q', '')
     users = User.objects.filter(username__icontains=query)
@@ -541,6 +519,7 @@ def download_file(request, file_id):
 from django.shortcuts import render
 from .models import News
 
+@login_required
 def news(request):
     news_items = News.objects.all().order_by('-date_posted')
     context = {'news_items': news_items}
@@ -551,6 +530,7 @@ from django.shortcuts import render, redirect
 from .models import Announcement
 from .forms import AnnouncementForm
 
+@login_required
 def announcements(request):
     announcements = Announcement.objects.all().order_by('-date_posted')
     return render(request, 'dashboard/announcements.html', {'announcements': announcements})
@@ -558,6 +538,7 @@ from django.shortcuts import render, redirect
 from .forms import AnnouncementForm
 from .models import Announcement
 
+@login_required
 def create_announcement(request):
     if request.method == 'POST':
         form = AnnouncementForm(request.POST)
@@ -573,16 +554,18 @@ from django.shortcuts import render
 from .models import FAQ
 from .forms import FAQForm
 
+@login_required
 def faq(request):
     faqs = FAQ.objects.all()
     return render(request, 'dashboard/faq.html', {'faqs': faqs})
 
+@login_required
 def add_faq(request):
     if request.method == 'POST':
         form = FAQForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('faq')
+            return redirect('home')
     else:
         form = FAQForm()
     return render(request, 'dashboard/add_faq.html', {'form': form})

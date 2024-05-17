@@ -40,18 +40,11 @@
                                 Options
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'books' %}">Books</a>
-                                <a class="dropdown-item" href="{% url 'wiki' %}">Wikipedia</a>
-                                <a class="dropdown-item" href="{% url 'dictionary' %}">Dictionary</a>
-                                <a class="dropdown-item" href="{% url 'youtube' %}">Youtube</a>
-                                <a class="dropdown-item" href="{% url 'todo' %}">To-do</a>
-                                <a class="dropdown-item" href="{% url 'homework' %}">Homework</a>
-                                <a class="dropdown-item" href="{% url 'notes' %}">Notes</a>
                                 <a class="dropdown-item" href="{% url 'sendemail' %}">Send Email</a>
-                                <a class="dropdown-item" href="{% url 'upload' %}">Upload File</a>
-                                <a class="dropdown-item" href="{% url 'showfile' %}">Show File</a>
                                 <a class="dropdown-item" href="{% url 'chatbot' %}">Get Help</a>
-                                <a class="dropdown-item" href="{% url 'chat' %}">chat</a>
+                                <a href="{% url 'announcements' %}" class="dropdown-item">Announcements</a>
+                                <a href="{% url 'create_announcement' %}"  class="dropdown-item">Create Announcement</a>
+                               
                                
                             </div>
                         </li>

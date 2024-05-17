@@ -4,15 +4,16 @@ from . models import *
 from django.contrib.auth.forms import UserCreationForm
 
 
+from django import forms
+from .models import Notes
+
 class NotesForm(forms.ModelForm):
     class Meta:
         model = Notes
         fields = ['title', 'description']
 
-    def update_instance(self, instance):
-        instance.title = self.cleaned_data['title']
-        instance.description = self.cleaned_data['description']
-        instance.save()
+
+ 
 
 
 class DateInput(forms.DateInput):

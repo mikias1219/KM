@@ -49,8 +49,8 @@
         <div class="col-md-6">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ user.username }}</h5>
-                    <p class="card-text">Email: {{ user.email }}</p>
+                    <h5 class="card-title"> Name Of Reciever :{{ user.username }}</h5>
+                   
                     <a href="{% url 'send_file' user.id %}" class="btn btn-primary">Send File</a>
                 </div>
             </div>

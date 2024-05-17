@@ -1,9 +1,21 @@
 {% extends 'dashboard/base.html' %}
 {% block content %}
-  <h2>Update Note</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Update</button>
-  </form>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Note</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Update Note</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Note</button>
+        </form>
+        <a href="{% url 'notes' %}" class="btn btn-secondary mt-3">Back to Notes</a>
+    </div>
+</body>
+</html>
+{% endblock content %}
