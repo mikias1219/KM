@@ -19,7 +19,7 @@ from django.contrib.auth import logout
 from django.shortcuts import redirect
 
 from .models import News
-
+@login_required
 def home(request):
     news_items = News.objects.all().order_by('-date_posted')[:5]  # Get the latest 5 news items
     context = {'news_items': news_items}

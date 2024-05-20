@@ -14,12 +14,53 @@
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
           crossorigin="anonymous" />
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background-color: #343a40 !important;
+        }
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f8f9fa !important;
+        }
+        .nav-link {
+            color: #f8f9fa !important;
+        }
+        .nav-link:hover {
+            color: #ffc107 !important;
+        }
+        .container {
+            margin-top: 2rem;
+        }
+        h2 {
+            color: #343a40;
+            margin-bottom: 1rem;
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card-title {
+            font-size: 1.25rem;
+            color: #343a40;
+        }
+        .icon {
+            margin-right: 0.5rem;
+        }
+    </style>
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">Student Study Portal</a>
+            <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-graduation-cap icon"></i>Student Study Portal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -28,35 +69,30 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home icon"></i>Home</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Options
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{% url 'sendemail' %}">Send Email</a>
-                                <a class="dropdown-item" href="{% url 'chatbot' %}">Get Help</a>
-                                <a href="{% url 'announcements' %}" class="dropdown-item">Announcements</a>
-                                <a href="{% url 'create_announcement' %}"  class="dropdown-item">Create Announcement</a>
-                               
-                               
-                            </div>
+                            <a class="nav-link" href="{% url 'sendemail' %}"><i class="fas fa-envelope icon"></i>Send Email</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout {{ user.username }}</a>
+                            <a class="nav-link" href="{% url 'chatbot' %}"><i class="fas fa-comments icon"></i>Get Help</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'announcements' %}" class="nav-link"><i class="fas fa-bullhorn icon"></i>Announcements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'create_announcement' %}" class="nav-link"><i class="fas fa-plus icon"></i>Create Announcement</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt icon"></i>Logout {{ user.username }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus icon"></i>Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt icon"></i>Login</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -65,7 +101,7 @@
     </nav>
 </header>
 <br /><br />
-<main>
+<main class="container">
     {% if messages %}
         {% for msg in messages %}
             <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
