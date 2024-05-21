@@ -1,173 +1,174 @@
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-}
-
-.container {
-  margin-top: 30px;
-}
-
-h2 {
-  font-size: 2.5rem;
-  color: #343a40;
-  margin-bottom: 20px;
-}
-
-p {
-  font-size: 1.25rem;
-  color: #6c757d;
-  margin-bottom: 40px;
-}
-
-.navigation-links .btn {
-  margin: 10px;
-  padding: 15px 30px;
-  font-size: 1.25rem;
-}
-
-.card {
-  transition: transform 0.2s ease;
-}
-
-.card:hover {
-  transform: scale(1.05);
-}
-
-.card-title {
-  font-size: 1.5rem;
-  color: #343a40;
-}
-
-.card-text {
-  font-size: 1rem;
-  color: #6c757d;
-}
-
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
-}
-
-hr {
-  margin: 40px 0;
-  border-top: 1px solid #dee2e6;
-}
-
-@media (max-width: 768px) {
-  .card {
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  .container {
+    margin-top: 30px;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    color: #343a40;
     margin-bottom: 20px;
   }
-}
-</style>
-
-
-{% extends 'dashboard/base.html' %}
-{% load static %}
-{% block content %}
-
-<section class="container text-center">
-  <h2>Welcome to the Educational Portal</h2>
-  <p>Explore a wide range of educational resources and tools to enhance your learning experience:</p>
   
-  <div class="row my-4">
-    <div class="col-md-12">
-        <div class="navigation-links mb-4">
-            <a href="{% url 'search_user' %}" class="btn btn-primary btn-lg m-2">Search User</a>
-            <a href="{% url 'received_files' %}" class="btn btn-primary btn-lg m-2">Received Files</a>
-            <a href="{% url 'add_faq' %}" class="btn btn-primary btn-lg m-2">Add FAQ</a>
-        </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row my-4">
-    <div class="col-md-4 mb-4">
-      <a href="{% url 'youtube' %}">
-        <div class="card h-100 shadow-sm">
-          <img class="card-img-top" src="{% static 'images/Youtube Img.jpg' %}" alt="Youtube image">
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">Youtube Search</h5>
-            <p class="card-text">Search and play educational videos from YouTube.</p>
+  p {
+    font-size: 1.25rem;
+    color: #6c757d;
+    margin-bottom: 40px;
+  }
+  
+  .navigation-links .btn {
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 1.25rem;
+  }
+  
+  .card {
+    transition: transform 0.2s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  .card-title {
+    font-size: 1.5rem;
+    color: #343a40;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  hr {
+    margin: 40px 0;
+    border-top: 1px solid #dee2e6;
+  }
+  
+  @media (max-width: 768px) {
+    .card {
+      margin-bottom: 20px;
+    }
+  }
+  </style>
+  
+  
+  {% extends 'dashboard/base.html' %}
+  {% load static %}
+  {% block content %}
+  
+  <section class="container text-center">
+    <h2>Welcome to the Educational Portal</h2>
+    <p>Explore a wide range of educational resources and tools to enhance your learning experience:</p>
+    
+    <div class="row my-4">
+      <div class="col-md-12">
+          <div class="navigation-links mb-4">
+              <a href="{% url 'search_user' %}" class="btn btn-primary btn-lg m-2">Search Students</a>
+              <a href="{% url 'received_files' %}" class="btn btn-primary btn-lg m-2">Received Files</a>
+              <a href="{% url 'add_faq' %}" class="btn btn-primary btn-lg m-2">Add FAQ</a>
           </div>
-        </div>
-      </a>
+      </div>
     </div>
-    <div class="col-md-4 mb-4">
-      <a href="{% url 'notes' %}">
-        <div class="card h-100 shadow-sm">
-          <img class="card-img-top" src="{% static 'images/Notes Img.jpg' %}" alt="Notes image">
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">Notes</h5>
-            <p class="card-text">Create and manage your study notes.</p>
+  
+    <hr>
+  
+    <div class="row my-4">
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'youtube' %}">
+          <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="{% static 'images/Youtube Img.jpg' %}" alt="Youtube image">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">Youtube Search</h5>
+              <p class="card-text">Search and play educational videos from YouTube.</p>
+            </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-md-4 mb-4">
-      <a href="{% url 'books' %}">
-        <div class="card h-100 shadow-sm">
-          <img class="card-img-top" src="{% static 'images/Book Search Img.jpg' %}" alt="Book Search image">
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">Books Search</h5>
-            <p class="card-text">Browse and discover educational books.</p>
+        </a>
+      </div>
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'notes' %}">
+          <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="{% static 'images/Notes Img.jpg' %}" alt="Notes image">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">Notes</h5>
+              <p class="card-text">Create and manage your study notes.</p>
+            </div>
           </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="row my-4">
-    <div class="col-md-4 mb-4">
-      <a href="{% url 'dictionary' %}">
-        <div class="card h-100 shadow-sm">
-          <img class="card-img-top" src="{% static 'images/Dictionary Img.jpg' %}" alt="Dictionary image">
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">Dictionary</h5>
-            <p class="card-text">Look up word meanings and definitions.</p>
+        </a>
+      </div>
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'books' %}">
+          <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="{% static 'images/Book Search Img.jpg' %}" alt="Book Search image">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">Books Search</h5>
+              <p class="card-text">Browse and discover educational books.</p>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
-    <div class="col-md-4 mb-4">
-      <a href="{% url 'wiki' %}">
-        <div class="card h-100 shadow-sm">
-          <img class="card-img-top" src="{% static 'images/WikiPedia Img.jpg' %}" alt="Wikipedia image">
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">Wikipedia</h5>
-            <p class="card-text">Search and read Wikipedia articles.</p>
+  
+    <div class="row my-4">
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'dictionary' %}">
+          <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="{% static 'images/Dictionary Img.jpg' %}" alt="Dictionary image">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">Dictionary</h5>
+              <p class="card-text">Look up word meanings and definitions.</p>
+            </div>
           </div>
-        </div>
-      </a>
-    </div>
-    <div class="col-md-4 mb-4">
-      <a href="{% url 'todo' %}">
-        <div class="card h-100 shadow-sm">
-          <img class="card-img-top" src="{% static 'images/Todo Img.jpg' %}" alt="Todos image">
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">To Do</h5>
-            <p class="card-text">Manage your tasks and to-do lists.</p>
+        </a>
+      </div>
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'wiki' %}">
+          <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="{% static 'images/WikiPedia Img.jpg' %}" alt="Wikipedia image">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">Wikipedia</h5>
+              <p class="card-text">Search and read Wikipedia articles.</p>
+            </div>
           </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <div class="row my-4">
-    <div class="col-md-4 mb-4">
-      <a href="{% url 'homework' %}">
-        <div class="card h-100 shadow-sm">
-          <img class="card-img-top" src="{% static 'images/Homework Img.jpg' %}" alt="Homework image">
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">Homework</h5>
-            <p class="card-text">Manage and track your homework assignments.</p>
+        </a>
+      </div>
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'todo' %}">
+          <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="{% static 'images/Todo Img.jpg' %}" alt="Todos image">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">To Do</h5>
+              <p class="card-text">Manage your tasks and to-do lists.</p>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
     </div>
-   
-  </div>
-</section>
-
-{% endblock content %}
+  
+    <div class="row my-4">
+      <div class="col-md-4 mb-4">
+        <a href="{% url 'homework' %}">
+          <div class="card h-100 shadow-sm">
+            <img class="card-img-top" src="{% static 'images/Homework Img.jpg' %}" alt="Homework image">
+            <div class="card-body">
+              <h5 class="card-title font-weight-bold">Homework</h5>
+              <p class="card-text">Manage and track your homework assignments.</p>
+            </div>
+          </div>
+        </a>
+      </div>
+     
+    </div>
+  </section>
+  
+  {% endblock content %}
+  

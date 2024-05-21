@@ -34,4 +34,5 @@ urlpatterns = [
     path('announcements/create/', views.create_announcement, name='create_announcement'),
     path('faq/', views.faq, name='faq'),
     path('add_faq/', views.add_faq, name='add_faq'),
+     path('update_profile/', views.update_profile, name='update_profile'),
 ]

@@ -9,8 +9,8 @@ from youtubesearchpython import VideosSearch
 import requests
 import wikipedia
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, FileResponse
-from .models import Notes, UploadedFile
+from django.http import HttpResponse, FileResponse, HttpResponseRedirect
+from .models import Expense, Notes, Profile, UploadedFile
 from .forms import NotesForm, FileUploadForm
 from django.core.mail import EmailMessage
 from .forms import EmailForm
@@ -482,24 +482,21 @@ def search_user(request):
 
 @login_required
 def send_file(request, user_id):
-    selected_user = get_object_or_404(User, pk=user_id)
-    
+    user = User.objects.get(id=user_id)
     if request.method == 'POST':
         form = FileUploadForm(request.POST, request.FILES)
         if form.is_valid():
-            uploaded_file = form.save(commit=False)
-            uploaded_file.sender = request.user  # Save sender's information
-            uploaded_file.user = selected_user
-            uploaded_file.save()
-            # Redirect to the same page to prevent duplicate form submissions
-            return redirect('send_file', user_id=user_id)
+            # Handle file upload logic here
+            # For example, save the file and send it to the user
+            file = form.cleaned_data['file']
+            # Do something with the file, like save it to a specific location
+            messages.success(request, f"File sent to {user.username} successfully.")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request, "Failed to send file. Please check the form.")
     else:
         form = FileUploadForm()
-
-    # Only show files that belong to the currently logged-in user
-    files = UploadedFile.objects.filter(user=request.user)
-
-    return render(request, 'dashboard/send_file.html', {'selected_user': selected_user, 'form': form, 'files': files})
+    return render(request, 'dashboard/send_file.html', {'form': form, 'selected_user': user})
 
 
 @login_required
@@ -534,9 +531,7 @@ from .forms import AnnouncementForm
 def announcements(request):
     announcements = Announcement.objects.all().order_by('-date_posted')
     return render(request, 'dashboard/announcements.html', {'announcements': announcements})
-from django.shortcuts import render, redirect
-from .forms import AnnouncementForm
-from .models import Announcement
+
 
 @login_required
 def create_announcement(request):
@@ -569,4 +564,25 @@ def add_faq(request):
     else:
         form = FAQForm()
     return render(request, 'dashboard/add_faq.html', {'form': form})
+# views.py
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import UserUpdateForm
+
+@login_required
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your profile has been updated!')
+            return redirect('update_profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    context = {
+        'form': form
+    }
+    return render(request, 'dashboard/update_profile.html', context)
+
 

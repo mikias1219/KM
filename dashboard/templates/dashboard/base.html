@@ -60,7 +60,7 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-graduation-cap icon"></i>Student Study Portal</a>
+            <a class="navbar-brand" href="{% url 'home' %}"><i class="fas fa-graduation-cap icon"></i>Educational Portal</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -69,34 +69,38 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home icon"></i>Home</a>
+                        <a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home icon"></i> Home</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'sendemail' %}"><i class="fas fa-envelope icon"></i>Send Email</a>
+                            <a class="nav-link" href="{% url 'sendemail' %}"><i class="fas fa-envelope icon"></i> Send Email</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'chatbot' %}"><i class="fas fa-comments icon"></i>Get Help</a>
+                            <a class="nav-link" href="{% url 'chatbot' %}"><i class="fas fa-comments icon"></i> Get Help</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'announcements' %}" class="nav-link"><i class="fas fa-bullhorn icon"></i>Announcements</a>
+                            <a href="{% url 'announcements' %}" class="nav-link"><i class="fas fa-bullhorn icon"></i> Announcements</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'create_announcement' %}" class="nav-link"><i class="fas fa-plus icon"></i>Create Announcement</a>
+                            <a href="{% url 'create_announcement' %}" class="nav-link"><i class="fas fa-plus icon"></i> Create Announcement</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt icon"></i>Logout {{ user.username }}</a>
+                            <a class="nav-link" href="{% url 'update_profile' %}"><i class="fas fa-user icon"></i> Update Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt icon"></i> Logout {{ user.username }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus icon"></i>Register</a>
+                            <a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus icon"></i> Register</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt icon"></i>Login</a>
+                            <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt icon"></i> Login</a>
                         </li>
                     {% endif %}
                 </ul>
             </div>
+            
         </div>
     </nav>
 </header>

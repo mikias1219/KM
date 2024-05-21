@@ -2,39 +2,6 @@
 
 {% block content %}
 <div class="container mt-5">
-    <style>
-        .card {
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            border-color: #545b62;
-        }
-
-        .mt-3 {
-            margin-top: 1rem;
-        }
-    </style>
-    
     <h1>Search Users</h1>
     <form method="GET" action="{% url 'search_user' %}">
         <div class="input-group mb-3">
@@ -44,24 +11,37 @@
     </form>
     <hr>
     {% if users %}
-    <div class="row">
-        {% for user in users %}
-        <div class="col-md-6">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title"> Name Of Reciever :{{ user.username }}</h5>
-                   
-                    <a href="{% url 'send_file' user.id %}" class="btn btn-primary">Send File</a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <div class="col">
-            <p>No results found.</p>
-        </div>
-        {% endfor %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                {% if user.id != request.user.id %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'send_file' user.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">Send File</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+                {% empty %}
+                <tr>
+                    <td colspan="2">No results found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-   
+    {% else %}
+    <p>No users found.</p>
     {% endif %}
 </div>
 {% endblock %}
