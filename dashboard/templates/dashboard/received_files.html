@@ -16,7 +16,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">File: {{ file.file.name }}</h5>
-                    <p class="card-text">Sender: {{ file.sender.username }}</p>
+                   
                     <p class="card-text">Sent on: {{ file.uploaded_at }}</p>
                     <a href="{% url 'download_file' file.id %}" class="btn btn-primary">Download File</a>
                 </div>

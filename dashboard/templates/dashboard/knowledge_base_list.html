@@ -1,0 +1,16 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Knowledge Base</h1>
+    <a href="{% url 'add_knowledge_base' %}" class="btn btn-primary mb-3">Add New Article</a>
+    <ul class="list-group">
+        {% for article in articles %}
+            <li class="list-group-item">
+                <a href="{% url 'knowledge_base_detail' article.pk %}">{{ article.title }}</a>
+                <small class="text-muted">by {{ article.author.username }} on {{ article.created_at }}</small>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,33 +1,18 @@
-<!-- chat.html -->
+<!-- index.html -->
+{% extends 'dashboard/base.html' %}
 
-<h1>Chat with {{ receiver.username }}</h1>
+{% block content %}
 
-<div id="chat-messages"></div>
-
-<input type="text" id="chat-message-input" placeholder="Type your message here...">
-<button id="chat-message-submit">Send</button>
-
-<script>
-    const chatSocket = new WebSocket(
-        'ws://'
-        + window.location.host
-        + '/ws/chat/{{ receiver.id }}/'
-    );
-
-    chatSocket.onmessage = function(e) {
-        const data = JSON.parse(e.data);
-        const message = data['message'];
-        const senderId = data['sender_id'];
-
-        document.querySelector('#chat-messages').innerHTML += `<p>${senderId}: ${message}</p>`;
-    };
-
-    document.querySelector('#chat-message-submit').onclick = function() {
-        const messageInputDom = document.querySelector('#chat-message-input');
-        const message = messageInputDom.value;
-        chatSocket.send(JSON.stringify({
-            'message': message
-        }));
-        messageInputDom.value = '';
-    };
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django and Python Chat App</title>
+</head>
+<body>
+    <h1>Django and Python Chat App</h1>
+    <iframe src="https://deadsimplechat.com/LfOXH9bri" width="100%" height="600px"></iframe>
+</body>
+</html>
+{% endblock %}

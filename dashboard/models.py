@@ -81,14 +81,36 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+from django.db import models
+from django.contrib.auth.models import User
+
+from django.db import models
+from django.contrib.auth.models import User
+
 class Message(models.Model):
-    sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
-    receiver = models.ForeignKey(User, related_name='receiver', on_delete=models.CASCADE)
-    message = models.TextField()
-    sent_at = models.DateTimeField(default=timezone.now)
+    sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
+    receiver = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
+    message = models.TextField(blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(upload_to='uploads/', blank=True, null=True)
+
+    class Meta:
+        ordering = ['timestamp']
+from django.db import models
+from django.contrib.auth.models import User
+
+class KnowledgeBase(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"From {self.sender} to {self.receiver}: {self.message}"
+        return self.title
+
+
+
     
 from django.db import models
 from django.contrib.auth.models import User

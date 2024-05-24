@@ -76,3 +76,31 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email']
 
+# forms.py
+from django import forms
+from .models import Message
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['receiver', 'message']
+from django import forms
+from .models import Message
+
+
+
+from django import forms
+from .models import KnowledgeBase
+
+class KnowledgeBaseForm(forms.ModelForm):
+    class Meta:
+        model = KnowledgeBase
+        fields = ['title', 'content']
+# forms.py
+
+from django import forms
+
+class MessageForm(forms.Form):
+    content = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Type your message here...'}))
+
+

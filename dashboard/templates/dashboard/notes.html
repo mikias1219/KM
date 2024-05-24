@@ -1,3 +1,4 @@
+<!-- notes.html -->
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
@@ -17,8 +18,12 @@
             <ul class="list-group">
                 {% for note in notes %}
                     <li class="list-group-item">
-                        <h5>{{ note.title }}</h5>
-                        <p>{{ note.description }}</p>
+                        <h5 class="note-title">{{ note.title }}</h5>
+                        <p class="note-description">{{ note.description }}</p>
+                        <form action="{% url 'delete_note' note.id %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                         <a href="{% url 'update_note' note.id %}" class="btn btn-secondary btn-sm">Edit</a>
                     </li>
                 {% endfor %}
@@ -29,4 +34,15 @@
         </div>
     </div>
 </div>
+
+<style>
+    .note-title {
+        color: #007bff; /* Blue color for title */
+    }
+
+    .note-description {
+        color: #666; /* Dark gray color for description */
+    }
+</style>
+
 {% endblock %}

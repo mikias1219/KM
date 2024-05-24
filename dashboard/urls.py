@@ -5,10 +5,9 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('chatbot/', views.chatbot, name='chatbot'),
     path('news/', views.news, name='news'),
-  path('notes/', views.notes, name='notes'),
+    path('notes/', views.notes, name='notes'),
     path('notes/update/<int:note_id>/', views.update_note, name='update_note'),
-   
-    path('notes/delete/<int:pk>/', views.delete_note, name='delete-note'),
+    path('notes/delete/<int:pk>/', views.delete_note, name='delete_note'),
     path('delete/<int:file_id>/', views.delete_file, name='delete'),
     path('homework/', views.homework, name="homework"),
     path('update_homework/<int:pk>/', views.update_homework, name="update-homework"),
@@ -20,7 +19,6 @@ urlpatterns = [
     path('books/', views.books, name="books"),
     path('dictionary/', views.dictionary, name="dictionary"),
     path('wiki/', views.wiki, name="wiki"),
-   
     path('expense/', views.expense, name="expense"),
     path('sendemail/', views.send_email, name="sendemail"),
     path('upload/', views.upload_file, name="upload"),
@@ -34,5 +32,12 @@ urlpatterns = [
     path('announcements/create/', views.create_announcement, name='create_announcement'),
     path('faq/', views.faq, name='faq'),
     path('add_faq/', views.add_faq, name='add_faq'),
-     path('update_profile/', views.update_profile, name='update_profile'),
+    path('update_profile/', views.update_profile, name='update_profile'),
+  path('chat/', views.index, name='select_user'),
+    path('chat/<str:room_name>/', views.chatroom, name='chatroom'),
+path('reply/', views.reply_message, name='reply_message'),
+ path('knowledge-base/', views.knowledge_base_list, name='knowledge_base_list'),
+    path('knowledge-base/<int:pk>/', views.knowledge_base_detail, name='knowledge_base_detail'),
+    path('knowledge-base/add/', views.add_knowledge_base, name='add_knowledge_base'),
+ 
 ]

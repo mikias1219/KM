@@ -9,7 +9,7 @@ from youtubesearchpython import VideosSearch
 import requests
 import wikipedia
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, FileResponse, HttpResponseRedirect
+from django.http import HttpResponse, FileResponse, HttpResponseBadRequest, HttpResponseRedirect
 from .models import Expense, Notes, Profile, UploadedFile
 from .forms import NotesForm, FileUploadForm
 from django.core.mail import EmailMessage
@@ -586,3 +586,93 @@ def update_profile(request):
     return render(request, 'dashboard/update_profile.html', context)
 
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required
+from .models import Message
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required
+from .models import Message
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseBadRequest
+from django.contrib.auth.models import User
+from .models import Message
+from .forms import MessageForm
+
+
+# views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Message
+from .forms import MessageForm
+
+@login_required
+def select_user(request):
+    users = User.objects.exclude(id=request.user.id)
+    return render(request, 'dashboard/select_user.html', {'users': users})
+
+@login_required
+def chatroom(request, receiver_id):
+    receiver = get_object_or_404(User, id=receiver_id)
+    messages = Message.objects.filter(sender=request.user, receiver=receiver) | Message.objects.filter(sender=receiver, receiver=request.user)
+    messages = messages.order_by('timestamp')
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            content = form.cleaned_data['content']
+            message = Message(sender=request.user, receiver=receiver, content=content)
+            message.save()
+            return redirect('chatroom', receiver_id=receiver_id)
+    else:
+        form = MessageForm()
+    return render(request, 'dashboard/chat.html', {'receiver': receiver, 'messages': messages, 'form': form})
+
+
+@login_required
+def reply_message(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST, request.FILES)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            receiver_id = request.POST.get('receiver_id')
+            message.receiver = get_object_or_404(User, id=receiver_id)
+            message.save()
+            return redirect('chatroom')
+    return HttpResponseBadRequest("Invalid request")
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import KnowledgeBase
+from .forms import KnowledgeBaseForm
+
+@login_required
+def knowledge_base_list(request):
+    articles = KnowledgeBase.objects.all()
+    return render(request, 'dashboard/knowledge_base_list.html', {'articles': articles})
+
+@login_required
+def knowledge_base_detail(request, pk):
+    article = get_object_or_404(KnowledgeBase, pk=pk)
+    return render(request, 'dashboard/knowledge_base_detail.html', {'article': article})
+
+@login_required
+def add_knowledge_base(request):
+    if request.method == 'POST':
+        form = KnowledgeBaseForm(request.POST)
+        if form.is_valid():
+            knowledge_base = form.save(commit=False)
+            knowledge_base.author = request.user
+            knowledge_base.save()
+            return redirect('dashboard/knowledge_base_list')
+    else:
+        form = KnowledgeBaseForm()
+    return render(request, 'dashboard/add_knowledge_base.html', {'form': form})
+def index(request):
+   return render(request, 'dashboard/chat.html')

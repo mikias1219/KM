@@ -9,7 +9,7 @@
         <div class="content-section p-0 mt-5">
 
             <div class="m-3">
-                <h2>{{notes.title}}</h2>
+                <h2 class="note-title">{{notes.title}}</h2>
             </div>
 
             <hr class="p-0 m-0">
@@ -22,5 +22,15 @@
     </div>
 
 </section>
+
+<style>
+    .note-title {
+        color: #333; /* Color for the title */
+    }
+
+    .description {
+        color: #777; /* Color for the description */
+    }
+</style>
 
 {% endblock content %}
