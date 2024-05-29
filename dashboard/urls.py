@@ -36,8 +36,14 @@ urlpatterns = [
   path('chat/', views.index, name='select_user'),
     path('chat/<str:room_name>/', views.chatroom, name='chatroom'),
 path('reply/', views.reply_message, name='reply_message'),
- path('knowledge-base/', views.knowledge_base_list, name='knowledge_base_list'),
-    path('knowledge-base/<int:pk>/', views.knowledge_base_detail, name='knowledge_base_detail'),
+
+
+
+    path('knowledge-base/', views.knowledge_base_list, name='knowledge_base_list'),
     path('knowledge-base/add/', views.add_knowledge_base, name='add_knowledge_base'),
+    path('knowledge-base/<int:pk>/', views.knowledge_base_detail, name='knowledge_base_detail'),
+    # other paths...
+
+
  
 ]

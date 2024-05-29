@@ -670,7 +670,7 @@ def add_knowledge_base(request):
             knowledge_base = form.save(commit=False)
             knowledge_base.author = request.user
             knowledge_base.save()
-            return redirect('dashboard/knowledge_base_list')
+            return redirect('knowledge_base_list')  # Ensure this matches the name in your URL patterns
     else:
         form = KnowledgeBaseForm()
     return render(request, 'dashboard/add_knowledge_base.html', {'form': form})

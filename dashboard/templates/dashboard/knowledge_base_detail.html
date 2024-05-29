@@ -1,9 +1,27 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
+<style>
+    .article-title {
+        color: green;
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .article-content {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    } 
+
+    .article-meta {
+        font-size: 0.9em;
+        color: #666;
+    }
+</style>
 <div class="container mt-5">
-    <h1>{{ article.title }}</h1>
-    <p>{{ article.content }}</p>
-    <small class="text-muted">Written by {{ article.author.username }} on {{ article.created_at }}</small>
+    <h1 class="article-title">{{ article.title }}</h1>
+    <p class="article-content">{{ article.content }}</p>
+    <small class="article-meta text-muted">Written by {{ article.author.username }} on {{ article.created_at }}</small>
 </div>
 {% endblock %}

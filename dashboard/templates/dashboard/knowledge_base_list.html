@@ -1,14 +1,37 @@
 {% extends 'dashboard/base.html' %}
 
 {% block content %}
+<style>
+    .knowledge-base-title {
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .article-link {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .article-link:hover {
+        text-decoration: underline;
+    }
+
+    .article-meta {
+        font-size: 0.9em;
+        color: #666;
+    }
+</style>
 <div class="container mt-5">
-    <h1>Knowledge Base</h1>
+    <h1 class="knowledge-base-title">ARTICLES</h1>
     <a href="{% url 'add_knowledge_base' %}" class="btn btn-primary mb-3">Add New Article</a>
     <ul class="list-group">
         {% for article in articles %}
             <li class="list-group-item">
-                <a href="{% url 'knowledge_base_detail' article.pk %}">{{ article.title }}</a>
-                <small class="text-muted">by {{ article.author.username }} on {{ article.created_at }}</small>
+                <a href="{% url 'knowledge_base_detail' article.pk %}" class="article-link">{{ article.title }}</a>
+                <small class="article-meta">by {{ article.author.username }} on {{ article.created_at }}</small>
             </li>
         {% endfor %}
     </ul>

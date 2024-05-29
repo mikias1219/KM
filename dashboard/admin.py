@@ -9,7 +9,7 @@ admin.site.register(Profile)
 admin.site.register(Expense)
 admin.site.register(FAQ)
 admin.site.register(UploadedFile)
-admin.site.register(News)
+admin.site.register(KnowledgeBase)
 # admin.py
 from django.contrib import admin
 from .models import News
